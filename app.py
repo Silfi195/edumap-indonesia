@@ -173,7 +173,7 @@ import streamlit as st
 import base64
 
 # Baca foto banner
-with open("/content/Pendidkan indonesia.png", "rb") as file:
+with open("Pendidkan indonesia.png", "rb") as file:
     foto = base64.b64encode(file.read()).decode()
 
 # Banner dengan tulisan langsung di atas gambar
