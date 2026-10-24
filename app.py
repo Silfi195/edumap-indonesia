@@ -362,7 +362,29 @@ anggota_tim = [
 
 with st.sidebar.expander("Lihat Profil Anggota", expanded=False):
     for anggota in anggota_tim:
-        st.image(anggota["foto"], use_container_width=True)
+        
+import os
+
+# Tampilkan foto anggota jika file tersedia
+foto_anggota = anggota["foto"]
+
+if not os.path.isabs(foto_anggota):
+    foto_anggota = os.path.join(
+        os.path.dirname(__file__),
+        foto_anggota
+    )
+
+if os.path.exists(foto_anggota):
+    st.image(
+        foto_anggota,
+        use_container_width=True
+    )
+else:
+    st.warning(
+        f"Foto {anggota['nama']} belum ditemukan. "
+        "Periksa nama file foto di GitHub."
+    )
+
         st.markdown(f"### {anggota['nama']}")
         st.write(f"**{anggota['nim']}**")
         st.write(anggota["prodi"])
