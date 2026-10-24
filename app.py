@@ -377,12 +377,13 @@ foto_anggota = anggota["foto"]
         else:
             st.warning(f"Foto {anggota['nama']} belum ditemukan.")
 
-        st.markdown(f"### {anggota['nama']}")
-        st.write(f"**{anggota['nim']}**")
-        st.write(anggota["prodi"])
-        st.write(anggota["fakultas"])
-        st.write(anggota["universitas"])
-        st.markdown("---")
+for anggota in anggota_tim:
+    foto_anggota = anggota["foto"]
+    st.write(f"**{anggota['nama']}**")
+    st.write(anggota["prodi"])
+    st.write(anggota["fakultas"])
+    st.write(anggota["universitas"])
+    st.markdown("---")
 # =========================
 # HALAMAN BERANDA
 # =========================
