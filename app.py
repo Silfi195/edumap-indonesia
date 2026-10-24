@@ -359,31 +359,28 @@ anggota_tim = [
         "foto": "/content/Cahaya.jpeg"
     }
 ]
-
-with st.sidebar.expander("Lihat Profil Anggota", expanded=False):
+with st.sidebar.expander("Anggota Tim"):
     for anggota in anggota_tim:
+        foto_anggota = anggota["foto"]
 
-# Tampilkan foto anggota jika file tersedia
+        if not os.path.isabs(foto_anggota):
+            foto_anggota = os.path.join(
+                os.path.dirname(__file__),
+                foto_anggota
+            )
 
-for anggota in anggota_tim:
-    foto_anggota = anggota["foto"]
+        if os.path.exists(foto_anggota):
+            st.image(foto_anggota, use_container_width=True)
+        else:
+            st.warning(f"Foto {anggota['nama']} belum ditemukan.")
 
-    if not os.path.isabs(foto_anggota):
-        foto_anggota = os.path.join(
-            os.path.dirname(__file__),
-            foto_anggota
-        )
+        st.write(f"**{anggota['nama']}**")
+        st.write(f"**{anggota['nim']}**")
+        st.write(anggota["prodi"])
+        st.write(anggota["fakultas"])
+        st.write(anggota["universitas"])
+        st.markdown("---")
 
-    if os.path.exists(foto_anggota):
-        st.image(foto_anggota, use_container_width=True)
-    else:
-        st.warning(f"Foto {anggota['nama']} belum ditemukan.")
-
-    st.write(f"**{anggota['nama']}**")
-    st.write(anggota["prodi"])
-    st.write(anggota["fakultas"])
-    st.write(anggota["universitas"])
-    st.markdown("---")
 # =========================
 # HALAMAN BERANDA
 # =========================
