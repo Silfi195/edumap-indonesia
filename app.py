@@ -364,21 +364,21 @@ with st.sidebar.expander("Lihat Profil Anggota", expanded=False):
     for anggota in anggota_tim:
 
 # Tampilkan foto anggota jika file tersedia
-foto_anggota = anggota["foto"]
-
-  if not os.path.isabs(foto_anggota):
-            foto_anggota = os.path.join(
-                os.path.dirname(__file__),
-                foto_anggota
-            )
-
- if os.path.exists(foto_anggota):
-            st.image(foto_anggota, use_container_width=True)
-        else:
-            st.warning(f"Foto {anggota['nama']} belum ditemukan.")
 
 for anggota in anggota_tim:
     foto_anggota = anggota["foto"]
+
+    if not os.path.isabs(foto_anggota):
+        foto_anggota = os.path.join(
+            os.path.dirname(__file__),
+            foto_anggota
+        )
+
+    if os.path.exists(foto_anggota):
+        st.image(foto_anggota, use_container_width=True)
+    else:
+        st.warning(f"Foto {anggota['nama']} belum ditemukan.")
+
     st.write(f"**{anggota['nama']}**")
     st.write(anggota["prodi"])
     st.write(anggota["fakultas"])
