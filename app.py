@@ -333,6 +333,7 @@ ipm_rata = df["IPM"].mean()
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 👩‍💻 Our Developer Team")
 
+
 anggota_tim = [
     {
         "nama": "Irman Wahyudi",
@@ -340,7 +341,7 @@ anggota_tim = [
         "prodi": "S1 Statistika",
         "fakultas": "FMIPA",
         "universitas": "Universitas Negeri Padang",
-        "foto": "/content/Irman.jpeg"
+        "foto": "Irman.jpeg"
     },
     {
         "nama": "Silfi Zona Sakinah",
@@ -348,7 +349,7 @@ anggota_tim = [
         "prodi": "S1 Statistika",
         "fakultas": "FMIPA",
         "universitas": "Universitas Negeri Padang",
-        "foto": "/content/Silfi.jpeg"
+        "foto": "Silfi.jpeg"
     },
     {
         "nama": "Cahaya Stevany Putri",
@@ -356,9 +357,10 @@ anggota_tim = [
         "prodi": "S1 Statistika",
         "fakultas": "FMIPA",
         "universitas": "Universitas Negeri Padang",
-        "foto": "/content/Cahaya.jpeg"
+        "foto": "Cahaya.jpeg"
     }
 ]
+
 with st.sidebar.expander("Anggota Tim"):
     for anggota in anggota_tim:
         foto_anggota = anggota["foto"]
