@@ -362,8 +362,6 @@ anggota_tim = [
 
 with st.sidebar.expander("Lihat Profil Anggota", expanded=False):
     for anggota in anggota_tim:
-        
-import os
 
 # Tampilkan foto anggota jika file tersedia
 foto_anggota = anggota["foto"]
