@@ -1,6 +1,8 @@
 import os
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 import folium
 from streamlit_folium import st_folium
 
@@ -306,26 +308,7 @@ st.info(
     "peringkat resmi pendidikan."
 )
 
-# Filter provinsi untuk halaman yang membutuhkan pilihan
-daftar_provinsi = sorted(df["Provinsi"].dropna().unique())
-
-if not daftar_provinsi:
-    st.error("Data provinsi tidak ditemukan.")
-    st.stop()
-
-if "provinsi_pilihan" not in st.session_state:
-    st.session_state["provinsi_pilihan"] = daftar_provinsi[0]
-
-if st.session_state["provinsi_pilihan"] not in daftar_provinsi:
-    st.session_state["provinsi_pilihan"] = daftar_provinsi[0]
-
-provinsi = st.sidebar.selectbox(
-    "Pilih provinsi",
-    daftar_provinsi,
-    key="provinsi_pilihan"
-)
-
-data = df[df["Provinsi"] == provinsi].iloc[0]
+# Rata-rata IPM nasional
 ipm_rata = df["IPM"].mean()
 # =========================
 # PROFIL TIM DEVELOPER
@@ -785,6 +768,17 @@ if halaman == "Beranda":
 # =========================
 elif halaman == "Profil Provinsi":
     st.header("Profil Provinsi")
+
+    daftar_provinsi = sorted(df["Provinsi"].dropna().unique())
+
+    provinsi = st.selectbox(
+        "Pilih provinsi",
+        daftar_provinsi,
+        key="provinsi_profil"
+    )
+
+    data = df[df["Provinsi"] == provinsi].iloc[0]
+
     st.subheader(provinsi)
 
     c1, c2, c3 = st.columns(3)
@@ -874,6 +868,54 @@ elif halaman == "Analisis Data":
         "Grafik ini digunakan untuk mengamati pola hubungan IPM "
         "dengan indikator penggunaan internet di sekolah. Pola "
         "hubungan tidak dengan sendirinya membuktikan sebab-akibat."
+    )
+
+    # =========================
+    # HEATMAP KORELASI
+    # =========================
+    st.divider()
+    st.subheader("Korelasi IPM dan Indikator Penggunaan Internet")
+
+    kolom_korelasi = [
+        "IPM",
+        "Tidak_Belum_Pernah_Sekolah",
+        "Masih_Bersekolah",
+        "Tidak_Sekolah_Lagi",
+        "Rumah_Sendiri",
+        "Bukan_Rumah_Sendiri",
+        "Kantor",
+        "Sekolah",
+        "Tempat_Umum",
+        "Kendaraan_Berjalan"
+    ]
+
+    korelasi = df[kolom_korelasi].corr()
+
+    fig, ax = plt.subplots(figsize=(14, 9))
+
+    sns.heatmap(
+        korelasi,
+        annot=True,
+        cmap="coolwarm",
+        fmt=".2f",
+        vmin=-1,
+        vmax=1,
+        center=0,
+        linewidths=0.5,
+        ax=ax
+    )
+
+    ax.set_title("Korelasi IPM dan Indikator Penggunaan Internet")
+    plt.xticks(rotation=45, ha="right")
+    plt.yticks(rotation=0)
+    plt.tight_layout()
+
+    st.pyplot(fig)
+    plt.close(fig)
+
+    st.caption(
+        "Korelasi menunjukkan arah dan kekuatan hubungan linear "
+        "antarindikator. Korelasi tidak membuktikan sebab-akibat."
     )
 
     st.markdown("### Ringkasan statistik")
